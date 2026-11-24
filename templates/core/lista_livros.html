@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="pt-BR">
@@ -8,16 +9,48 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+
     <h1>Catálogo de livros</h1>
+
     <form method="GET">
+
         <input
             type="search"
             name="q"
-            value="{{ pesquisa|default:'' }}"
+            value="{{ pesquisa }}"
             placeholder="Pesquisar pelo título"
         >
+
+        <select name="autor">
+            <option value="">Todos os autores</option>
+
+            {% for autor in autores %}
+                <option value="{{ autor.id }}"
+                    {% if autor_selecionado == autor.id|stringformat:"s" %}selected{% endif %}>
+                    {{ autor.nome }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="categoria">
+            <option value="">Todas as categorias</option>
+
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id }}"
+                    {% if categoria_selecionada == categoria.id|stringformat:"s" %}selected{% endif %}>
+                    {{ categoria.nome }}
+                </option>
+            {% endfor %}
+        </select>
+
         <button type="submit">Pesquisar</button>
+
+        <a href="{% url 'lista-livros' %}">
+            Limpar filtros
+        </a>
+
     </form>
+
     {% if livros %}
         <ul>
             {% for livro in livros %}
@@ -27,12 +60,32 @@
                     Categoria: {{ livro.categoria.nome }}<br>
                     Ano: {{ livro.ano_publicacao }}
                 </li>
-            {% empty %}
-                <li>Nenhum livro encontrado.</li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Nenhum livro cadastrado.</p>
+        <p>Nenhum livro encontrado.</p>
     {% endif %}
+
+    <nav aria-label="Paginação">
+
+        {% if pagina_atual.has_previous %}
+            <a href="?q={{ pesquisa|urlencode }}&autor={{ autor_selecionado|urlencode }}&categoria={{ categoria_selecionada|urlencode }}&page={{ pagina_atual.previous_page_number }}">
+                Página anterior
+            </a>
+        {% endif %}
+
+        <span>
+            Página {{ pagina_atual.number }}
+            de {{ pagina_atual.paginator.num_pages }}
+        </span>
+
+        {% if pagina_atual.has_next %}
+            <a href="?q={{ pesquisa|urlencode }}&autor={{ autor_selecionado|urlencode }}&categoria={{ categoria_selecionada|urlencode }}&page={{ pagina_atual.next_page_number }}">
+                Próxima página
+            </a>
+        {% endif %}
+
+    </nav>
+
 </body>
 </html>
