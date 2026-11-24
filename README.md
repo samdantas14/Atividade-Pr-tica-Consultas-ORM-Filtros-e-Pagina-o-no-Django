@@ -1,5 +1,7 @@
 DUPLA: SAMUEL DANTAS E PAULO VINICIUS
+
 TEMA: LIVROS
+
 FILTROS IMPLEMENTADOS: AUTORES E CATEGORIAS.
 
 <img width="1012" height="652" alt="image" src="https://github.com/user-attachments/assets/0ab4d1bb-c35e-4080-8069-d9dea4d5b733" />
