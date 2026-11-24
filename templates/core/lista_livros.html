@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de livros</title>
+</head>
+<body>
+    <h1>Catálogo de livros</h1>
+
+    {% if livros %}
+        <ul>
+            {% for livro in livros %}
+                <li>
+                    <strong>{{ livro.titulo }}</strong><br>
+                    Autor: {{ livro.autor.nome }}<br>
+                    Categoria: {{ livro.categoria.nome }}<br>
+                    Ano: {{ livro.ano_publicacao }}
+                </li>
+            {% empty %}
+                <li>Nenhum livro encontrado.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum livro cadastrado.</p>
+    {% endif %}
+</body>
+</html>
