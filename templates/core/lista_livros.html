@@ -6,7 +6,15 @@
 </head>
 <body>
     <h1>Catálogo de livros</h1>
-
+    <form method="GET">
+        <input
+            type="search"
+            name="q"
+            value="{{ pesquisa|default:'' }}"
+            placeholder="Pesquisar pelo título"
+        >
+        <button type="submit">Pesquisar</button>
+    </form>
     {% if livros %}
         <ul>
             {% for livro in livros %}
